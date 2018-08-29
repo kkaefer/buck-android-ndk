@@ -1,0 +1,34 @@
+cxx_library(
+    name = "core",
+    srcs = [
+        "main.cpp",
+    ],
+    compiler_flags = [
+        "-std=c++14",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-variable",
+        "-fexceptions",
+        "-ftemplate-depth=1024",
+        "-frtti",
+    ],
+    exported_platform_linker_flags = [
+        ("android", [
+            "-lz",
+            "-lEGL",
+            "-lGLESv2",
+            "-landroid",
+            "-ljnigraphics",
+            "-llog",
+        ]),
+    ],
+    visibility = ["PUBLIC"],
+    soname = "libcore.$(ext)",
+)
+
+ndk_library(
+    name = "android-core",
+    deps = [ ":core" ],
+)
